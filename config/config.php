@@ -7,4 +7,5 @@ return [
 		'user'	   => 'root',
 		'password' => '123',
 	],
+    'defaultController' => 'site'
 ];
