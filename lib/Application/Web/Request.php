@@ -51,26 +51,29 @@ class Request
 //var_dump( $this->queryParams );
 //exit;
 
-//        if(!class_exists($controllerClass)
-//            || !method_exists($controllerClass,$controllerAction)
-//        ){
+//        if (!class_exists($controllerClass)
+//        ) {
 //            header('Not found', true, 404);
 //            exit;
 //        }
-
-        try{
-            $reflectionClass = new \ReflectionClass($controllerClass);
-            if(!$reflectionClass->hasMethod($controllerAction))
-            {
-                header('Not found', true, 404);
-                exit;
-            }
+//Взрыв мозга!!!!!!!!!
+        try {
+            $reflectionMethod = new \ReflectionMethod($controllerClass, $controllerAction);
         }catch (\Exception $e){
-            $controllerClass = '\Academy\Controllers\SiteController';
+            header('Not found', true, 404);
+            exit;
         }
 
-        $controller = new $controllerClass();
-        call_user_func([$controller, $controllerAction]);
+        $actionParams = [];
+
+//        var_dump( $reflectionMethod->getParameters() );
+        foreach ($reflectionMethod->getParameters() as $param){
+            $actionParams[$param->name] = $this->getParam($param->name);
+        }
+        var_dump( $actionParams );
+        $reflectionMethod->invokeArgs(new $controllerClass,$actionParams );
+//        $controller = new $controllerClass();
+//        call_user_func([$controller, $controllerAction]);
 
     }
 

@@ -18,6 +18,6 @@ class SiteController extends Controller
     public function actionIndex()
     {
         echo __METHOD__ . '<br><br>';
-        var_dump($_SERVER);
+//        var_dump($_SERVER);
     }
 }

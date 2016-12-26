@@ -15,14 +15,19 @@ class UserController extends Controller
     public function actionIndex()
     {
         echo __METHOD__ . '<br><br>';
-        var_dump($_SERVER);
+//        var_dump($_SERVER);
     }
 
-    public function actionLogin()
+    public function actionLogin($login)
     {
         echo __METHOD__ . '<br><br>';
-        var_dump($_SERVER);
+//        var_dump($_SERVER);
+        echo "Login: {$login}";
     }
 
+    public function actionView($id)
+    {
+        echo "ID {$id}";
+    }
 
 }
