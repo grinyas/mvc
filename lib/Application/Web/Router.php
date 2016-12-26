@@ -12,6 +12,11 @@ use Academy\App;
 
 class Router
 {
+    /**
+     * Resolved request route
+     *
+     * @var array
+     */
     protected $route = [];
 
     public function resolve()
@@ -21,25 +26,48 @@ class Router
             'action' => 'index',
         ];
 
-
-//        if(array_key_exists(ROUTER, $this->queryParams)){
-//            $route = $this->queryParams[ROUTER];
-//            unset($this->queryParams[ROUTER]);
-//        }
-
         $resolvedPath = [];
-        if($route = App::$i->request->getParam(ROUTE)){
+        if($route = App::$i->request->getParam('route')){
+
             $parts = explode('/', $route);
             $resolvedPath = [
                 'controller' => $parts[0],
                 'action' => !empty($parts[1])
                     ? $parts[1]
-                    : NULL,
-
+                    : null,
             ];
         }
 
-        $this->route = $resolvedPath + $defaults;
+        $this->route = array_filter($resolvedPath) + $defaults;
+
+        $controllerClass = ucfirst($this->route['controller']) . 'Controller';
+        $controllerClass = "\\Academy\\Controllers\\{$controllerClass}";
+
+        $controllerAction = 'action' . ucfirst($this->route['action']);
+
+        $this->setController($controllerClass);
+        $this->setAction($controllerAction);
+
         return  $this;
+    }
+
+    public function getController()
+    {
+        return $this->route['controller'];
+    }
+
+    public function getAction()
+    {
+        return $this->route['action'];
+    }
+
+    protected function setController($controllerClass)
+    {
+        $this->route['controller'] =  $controllerClass;
+    }
+
+    protected function setAction($controllerAction)
+    {
+        $this->route['action'] =  $controllerAction;
     }
 }

@@ -9,8 +9,6 @@
 namespace Academy\Application\Web;
 
 
-use Academy\App;
-
 class Request
 {
     /**
@@ -43,11 +41,10 @@ class Request
     public function handleRequest()
     {
         $router = new Router();
-        $request = $router->resolve();
-        $controllerClass = ucfirst($request['controller']) . 'Controller';
-        $controllerClass = "\\Academy\\Controllers\\{$controllerClass}";
+        $controllerClass = $router->resolve()->getController();
+        $controllerAction = $router->getAction();
 
-        $controllerAction = 'action' . ucfirst($request['action']);
+       
 
         if(!class_exists($controllerClass)
             || !method_exists($controllerClass,$controllerAction)
@@ -64,11 +61,13 @@ class Request
     /**
      * Return GET params
      *
+     * $name Param name
+     *
      * @return array
      */
     public function getParam($name, $defaults = null)
     {
-        return !isset($this->queryParams[$name])
+        return isset($this->queryParams[$name])
             ? $this->queryParams[$name]
             : $defaults;
     }
