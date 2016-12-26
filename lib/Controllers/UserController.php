@@ -9,7 +9,7 @@
 namespace Academy\Controllers;
 
 
-class UserController
+class UserController extends Controller
 {
 
     public function actionIndex()
@@ -23,5 +23,6 @@ class UserController
         echo __METHOD__ . '<br><br>';
         var_dump($_SERVER);
     }
+
 
 }

@@ -44,7 +44,7 @@ class Request
         $controllerClass = $router->resolve()->getController();
         $controllerAction = $router->getAction();
 
-       
+
 
         if(!class_exists($controllerClass)
             || !method_exists($controllerClass,$controllerAction)

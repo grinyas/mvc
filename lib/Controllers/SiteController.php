@@ -9,7 +9,7 @@
 namespace Academy\Controllers;
 
 
-class SiteController
+class SiteController extends Controller
 {
 
     public function actionIndex()
