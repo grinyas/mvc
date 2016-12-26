@@ -19,6 +19,13 @@ class Router
      */
     protected $route = [];
 
+    /**
+     * Resolved route params.
+     *
+     * @var array
+     */
+    protected $routeParams = [];
+
     public function resolve()
     {
         $defaults = [
@@ -31,12 +38,16 @@ class Router
 
             $parts = explode('/', $route);
             $resolvedPath = [
-                'controller' => $parts[0],
-                'action' => !empty($parts[1])
-                    ? $parts[1]
+                'controller' => array_shift($parts),
+                'action' => !empty($parts[0])
+                    ? array_shift($parts)
                     : null,
             ];
+
+            $this->resolveParams($parts);
         }
+
+
 
         $this->route = array_filter($resolvedPath) + $defaults;
 
@@ -69,5 +80,26 @@ class Router
     protected function setAction($controllerAction)
     {
         $this->route['action'] =  $controllerAction;
+    }
+
+    public function resolveParams(array $params)
+    {
+        if(empty($params))
+            return;
+
+        foreach ($params as $key => $value){
+            if(!($key % 2))
+                $this->routeParams[$value] = $params[++$key];
+        }
+    }
+
+    /**
+     * Returns resolved route parameters.
+     *
+     * @return array
+     */
+    public function getRouteParams()
+    {
+        return $this->routeParams;
     }
 }

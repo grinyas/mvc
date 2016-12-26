@@ -11,7 +11,10 @@ namespace Academy\Controllers;
 
 class SiteController extends Controller
 {
-
+    /**
+     * Index action
+     *
+     */
     public function actionIndex()
     {
         echo __METHOD__ . '<br><br>';

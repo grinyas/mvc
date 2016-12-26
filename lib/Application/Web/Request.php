@@ -9,6 +9,8 @@
 namespace Academy\Application\Web;
 
 
+
+
 class Request
 {
     /**
@@ -43,14 +45,28 @@ class Request
         $router = new Router();
         $controllerClass = $router->resolve()->getController();
         $controllerAction = $router->getAction();
+//        ??????
+        $this->queryParams = $router->getRouteParams();
 
+//var_dump( $this->queryParams );
+//exit;
 
+//        if(!class_exists($controllerClass)
+//            || !method_exists($controllerClass,$controllerAction)
+//        ){
+//            header('Not found', true, 404);
+//            exit;
+//        }
 
-        if(!class_exists($controllerClass)
-            || !method_exists($controllerClass,$controllerAction)
-        ){
-            header('Not found', true, 404);
-            exit;
+        try{
+            $reflectionClass = new \ReflectionClass($controllerClass);
+            if(!$reflectionClass->hasMethod($controllerAction))
+            {
+                header('Not found', true, 404);
+                exit;
+            }
+        }catch (\Exception $e){
+            $controllerClass = '\Academy\Controllers\SiteController';
         }
 
         $controller = new $controllerClass();
