@@ -9,6 +9,8 @@
 namespace Academy\Controllers;
 
 
+use Academy\Model\UserModel;
+
 class UserController extends Controller
 {
 
@@ -22,12 +24,16 @@ class UserController extends Controller
     {
         echo __METHOD__ . '<br><br>';
 //        var_dump($_SERVER);
-        echo "Login: {$login}";
+//        echo "Login: {$login}";
+
+        $userInfo = new UserModel();
+        var_dump($userInfo->findByPk($login));
     }
 
     public function actionView($id)
     {
         echo "ID {$id}";
+
     }
 
 }
