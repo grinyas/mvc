@@ -49,15 +49,14 @@ class Request
 //        ??????
         $this->queryParams = $router->getRouteParams();
 
-
-//exit;
-
 //        if (!class_exists($controllerClass)
 //        ) {
 //            header('Not found', true, 404);
 //            exit;
 //        }
 //Взрыв мозга!!!!!!!!!
+
+
         try {
             $reflectionMethod = new \ReflectionMethod($controllerClass, $controllerAction);
         }catch (\Exception $e){
@@ -71,7 +70,7 @@ class Request
         foreach ($reflectionMethod->getParameters() as $param){
             $actionParams[$param->name] = $this->getParam($param->name);
         }
-        var_dump( $actionParams );
+
         $reflectionMethod->invokeArgs(new $controllerClass,$actionParams );
 //        $controller = new $controllerClass();
 //        call_user_func([$controller, $controllerAction]);

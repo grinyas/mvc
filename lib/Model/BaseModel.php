@@ -21,7 +21,7 @@ abstract class BaseModel
     {
         $pk = (array) static::getPrimaryKey();
         $tableName = static::tableName();
-        $query = "SELECT * FROM {$tableName} WHERE id = {$id};";
+        $query = "SELECT * FROM {$tableName} WHERE id = {$id}";
 
         $statement = App::$i->getComponent('db')->prepare($query);
         $statement->execute();

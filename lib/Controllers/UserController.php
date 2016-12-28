@@ -20,14 +20,14 @@ class UserController extends Controller
 //        var_dump($_SERVER);
     }
 
-    public function actionLogin($login)
+    public function actionLogin($id)
     {
         echo __METHOD__ . '<br><br>';
 //        var_dump($_SERVER);
 //        echo "Login: {$login}";
 
         $userInfo = new UserModel();
-        var_dump($userInfo->findByPk($login));
+        var_dump($userInfo->findByPk($id));
     }
 
     public function actionView($id)
