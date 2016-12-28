@@ -23,7 +23,7 @@ abstract class BaseModel
         $tableName = static::tableName();
         $query = "SELECT * FROM {$tableName} WHERE id = {$id};";
 
-        $statement = App::$i->db->prepare($query);
+        $statement = App::$i->getComponent('db')->prepare($query);
         $statement->execute();
 
         $result = $statement->fetch(\PDO::FETCH_ASSOC);

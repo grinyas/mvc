@@ -42,13 +42,14 @@ class Request
      */
     public function handleRequest()
     {
+
         $router = new Router();
         $controllerClass = $router->resolve()->getController();
         $controllerAction = $router->getAction();
 //        ??????
         $this->queryParams = $router->getRouteParams();
 
-//var_dump( $this->queryParams );
+
 //exit;
 
 //        if (!class_exists($controllerClass)

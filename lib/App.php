@@ -10,17 +10,17 @@ class App
 	/**
 	 * Database connection.
 	 */
-	public $db;
+	protected $db;
 
     /**
      * @var
      */
-	public $config;
+	protected $config;
 
     /**
      * @var
      */
-    public $request;
+    protected $request;
 	/**
 	 * Create instance of app.
 	 */
@@ -63,4 +63,9 @@ class App
 	{
         $this->request->handleRequest();
 	}
+
+	public function getComponent($component)
+    {
+        return $this->$component;
+    }
 }

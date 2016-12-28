@@ -28,13 +28,15 @@ class Router
 
     public function resolve()
     {
+
+
         $defaults = [
-            'controller' => App::$i->config->get('defaultController'),
+            'controller' => App::$i->getComponent('config')->get('defaultController'),
             'action' => 'index',
         ];
 
         $resolvedPath = [];
-        if($route = App::$i->request->getParam('route')){
+        if($route = App::$i->getComponent('request')->getParam('route')){
 
             $parts = explode('/', $route);
             $resolvedPath = [
@@ -47,7 +49,7 @@ class Router
             $this->resolveParams($parts);
         }
 
-
+        var_dump($resolvedPath);
 
         $this->route = array_filter($resolvedPath) + $defaults;
 
