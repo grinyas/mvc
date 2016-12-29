@@ -11,13 +11,13 @@ namespace Academy\Controllers;
 
 use Academy\Model\UserModel;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
 
     public function actionIndex()
     {
         echo __METHOD__ . '<br><br>';
-//        var_dump($_SERVER);
+        $this->render('view');
     }
 
     public function actionLogin($id)
@@ -32,17 +32,17 @@ class UserController extends Controller
 
     public function actionView($id)
     {
-//        echo "ID {$id}";
         $model = (new UserModel())->findByPk($id);
-//        var_dump($model);
+
         if(is_null($model)){
             header('Not found', true, 404);
             exit;
         }
 
-        echo $model->id . '<br>';
-        echo $model->username . '<br>';
-        echo $model->email . '<br>';
+        $this->render('view', ['model' => $model]);
+//        echo $model->id . '<br>';
+//        echo $model->username . '<br>';
+//        echo $model->email . '<br>';
     }
 
 }
