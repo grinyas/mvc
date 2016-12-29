@@ -13,6 +13,8 @@ use Academy\App;
 abstract class BaseModel
 {
 
+    protected $attributes = [];
+
     abstract public function tableName();
 
     abstract public function getPrimaryKey();
@@ -26,7 +28,28 @@ abstract class BaseModel
         $statement = App::$i->getComponent('db')->prepare($query);
         $statement->execute();
 
-        $result = $statement->fetch(\PDO::FETCH_ASSOC);
-        return $result;
+//        $result = $statement->fetch(\PDO::FETCH_ASSOC);
+//        $result = $statement->fetchObject(static::class);
+        return $statement->rowCount()
+                ? $statement->fetchObject(static::class)
+                : null;
+    }
+
+    /**
+     * Magic getter
+     *
+     * @param string $name attribute name
+     * @return mixed|null
+     */
+    public function __get($name)
+    {
+        return isset($this->attributes[$name])
+                ? $this->attributes[$name]
+                : null;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->attributes[$name] = $value;
     }
 }

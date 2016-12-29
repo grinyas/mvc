@@ -32,8 +32,17 @@ class UserController extends Controller
 
     public function actionView($id)
     {
-        echo "ID {$id}";
+//        echo "ID {$id}";
+        $model = (new UserModel())->findByPk($id);
+//        var_dump($model);
+        if(is_null($model)){
+            header('Not found', true, 404);
+            exit;
+        }
 
+        echo $model->id . '<br>';
+        echo $model->username . '<br>';
+        echo $model->email . '<br>';
     }
 
 }
